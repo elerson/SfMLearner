@@ -5,6 +5,7 @@ import numpy as np
 from glob import glob
 from joblib import Parallel, delayed
 import os
+from skimage.io import imsave
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--dataset_dir", type=str, required=True, help="where the dataset is stored")
@@ -45,7 +46,7 @@ def dump_example(n, args):
         if not os.path.isdir(dump_dir):
             raise
     dump_img_file = dump_dir + '/%s.jpg' % example['file_name']
-    scipy.misc.imsave(dump_img_file, image_seq.astype(np.uint8))
+    imsave(dump_img_file, image_seq.astype(np.uint8))
     dump_cam_file = dump_dir + '/%s_cam.txt' % example['file_name']
     with open(dump_cam_file, 'w') as f:
         f.write('%f,0.,%f,0.,%f,%f,0.,0.,1.' % (fx, cx, fy, cy))
